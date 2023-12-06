@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="background-color: blanchedalmond;">
+    <h1 style="text-align: center;">My supermarket</h1>
+    product: <input id="product">
+    price: <input id="price">
+    <button onclick="addProduct()">add</button>
+    <button onclick="getData()">show in log</button>
+    <h3>Total products</h3>
+    <div id="totalProducts"></div>
+    <div id="display"></div><br>
+    <div><img src="fruits.jpg" width="300"> <img src="chocolates.webp" width="300"> <img src="drinks.jpg" width="300"></div>
+
+    <script>
+        let products = []
+        const MY_SERVER = "http://localhost:3000/products"
+
+        const getData = async () => {
+            products = await axios.get(MY_SERVER)
+            products = products.data
+            console.table(products)
+            buildDisplay()
+        }
+
+        const addProduct = () => {
+            axios.post(MY_SERVER, {
+                product: product.value,
+                price: price.value
+            })
+            getData()
+        }
+
+        const delProduct = (id) => {
+            axios.delete(MY_SERVER + "/" + id)
+        }
+
+
+        const updProduct = (id) => {
+            axios.put(MY_SERVER + "/" + id, {
+                product: product.value,
+                price: price.value
+            })
+
+        }
+
+        const buildDisplay = () => {
+            display.innerHTML = products.map(product =>
+                `<div>
+                product: ${product.product}
+                price: ${product.price}
+                <button onclick="delProduct(${product.id})">delete</button>
+                <button onclick="updProduct(${product.id})">update</button>
+                
+                </div>
+            `).join("")
+
+            totalProducts.innerHTML = `${products.length} products`
+        }
+        getData()
+    </script>
+</body>
+
+</html>

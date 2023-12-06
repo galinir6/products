@@ -1,0 +1,24 @@
+{
+  "products": [
+    {
+      "product": "apple",
+      "price": "4",
+      "id": 1
+    },
+    {
+      "product": "bread",
+      "price": "7",
+      "id": 3
+    },
+    {
+      "product": "banana",
+      "price": "3",
+      "id": 4
+    },
+    {
+      "product": "coca cola",
+      "price": "8",
+      "id": 6
+    }
+  ]
+}
